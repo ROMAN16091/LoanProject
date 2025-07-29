@@ -1,7 +1,7 @@
 # Необхідні імпорти
 import joblib
 import pandas as pd
-from sklearn.metrics import accuracy_score, f1_score
+from sklearn.metrics import accuracy_score, f1_score, precision_score
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
@@ -29,7 +29,7 @@ print(df.head().to_string(), '\n')
 # Кореляція
 num_df = df.select_dtypes(include='number')
 corr = num_df.corr()['Loan_Status_Y'].sort_values(ascending=False).round(2)
-print('Кореляція:\n', corr, '\n')
+print('Кореляція з цільовою змінною:\n', corr, '\n')
 # Досить велика позитивна залежність між цільовою змінною Loan_Status_Y та Credit_History - 0.61
 
 # Розробка моделі машинного навчання
@@ -40,7 +40,7 @@ y = df['Loan_Status_Y']
 
 # Розбиваємо дані на тренуючі та тестові
 X_train, X_test, y_train, y_test = train_test_split(X,y, random_state=0, test_size=0.25, stratify=y)
-param_grid = {'classifier__n_estimators': [50,100],
+param_grid = {'classifier__n_estimators': [25,50],
                 'classifier__max_depth': [5,13],
                 'classifier__max_features': [None,'sqrt'],
                 'classifier__min_samples_split': [5,7],
@@ -48,7 +48,7 @@ param_grid = {'classifier__n_estimators': [50,100],
                } # Набір гіперпараметрів для пошуку найкращих
 
 model = RandomForestClassifier(random_state=0)
-
+# Конвеєр для зручної підготовки та створення моделі
 pipeline = Pipeline([
     ('scaler', StandardScaler()),
     ('classifier', model),
@@ -62,7 +62,9 @@ y_pred = best_model.predict(X_test)
 # Оцінка моделі
 print(f'Точність: {accuracy_score(y_test, y_pred) * 100:.2f}%')
 print(f'Крос валідація: {cross_val_score(best_model, X_test, y_test, cv=5).mean() * 100:.2f}%')
-print(f'F1 Score: {f1_score(X_test, y_test) * 100:.2f}%')
+print(f'Precision: {precision_score(y_test, y_pred) * 100:.2f}%')
+print(f'Recall: {precision_score(y_test, y_pred) * 100:.2f}%')
+print(f'F1 Score: {f1_score(y_test, y_pred) * 100:.2f}%')
 
 # Візуалізація даних
 
@@ -97,3 +99,4 @@ plt.show()
 # Зберігаємо модель у файл
 
 joblib.dump(best_model, 'loan_model.pkl')
+print('Збережено!')
