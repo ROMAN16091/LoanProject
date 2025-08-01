@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Результат</title>
+</head>
+<body>
+    {% if result == 1 %}
+    <h2>✅ Вітаємо! Вашу позику схвалено!</h2>
+    <br><br>
+    <video width="400" autoplay muted loop>
+    <source src="https://i.gifer.com/12Ix.mp4" type="video/mp4">
+    </video>
+   {% else %}
+    <h2>❌ На жаль, вашу позику було відхилено.</h2>
+    <br><br>
+    <video width="400" autoplay muted loop>
+    <source src="https://i.gifer.com/11rY.mp4" type="video/mp4">
+    </video>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Оцінка позики</title>
+</head>
+<body>
+    <form method="post" action="{% url 'post_loan' %}">
+        {% csrf_token %}
+
+        <p>
+          <label for="ApplicantIncome">Дохід заявника (наприклад - 3000):</label><br>
+          <input id="ApplicantIncome" name="ApplicantIncome" type="number" required>
+        </p>
+        <p>
+          <label for="DependentsSelect">Кількість співзаявників :</label><br>
+          <select id="DependentsSelect" name="Dependents" required>
+              <option value="" disabled selected>Вибрати</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3+">3+</option>
+          </select>
+        </p>
+
+        <p>
+          <label for="CoapplicantIncome">Сумарний дохід співзаявника(ів) (наприклад - 1500)
+              <br>Якщо у вас немає співзаявників - залиште це поле порожнім:</label><br>
+          <input id="CoapplicantIncome" name="CoapplicantIncome" type="number" required>
+        </p>
+
+        <p>
+          <label for="GenderSelect">Стать:</label><br>
+          <select id="GenderSelect" name="Gender" required>
+              <option value="" disabled selected>Вибрати</option>
+              <option value="Male">Чоловік</option>
+              <option value="Female">Жінка</option>
+              <option value="Other">Інша</option>
+          </select>
+        </p>
+
+        <p>
+          <label for="MarriedSelect">У шлюбі:</label><br>
+          <select id="MarriedSelect" name="Married" required>
+              <option value="" disabled selected>Вибрати</option>
+              <option value="Yes">Так</option>
+              <option value="No">Ні</option>
+          </select>
+        </p>
+
+        <p>
+          <label for="Self_Employed_Select">Самозайнята особа:</label><br>
+          <select id="Self_Employed_Select" name="Self_Employed" required>
+              <option value="" disabled selected>Вибрати</option>
+              <option value="Yes">Так</option>
+              <option value="No">Ні</option>
+          </select>
+        </p>
+
+        <p>
+          <label for="EducationSelect">Освіта:</label><br>
+          <select id="EducationSelect" name="Education" required>
+              <option value="" disabled selected>Вибрати</option>
+              <option value="Graduate">Початкова</option>
+              <option value="Graduate">Базова середня</option>
+              <option value="Graduate">Повна середня</option>
+              <option value="Graduate">Професійно-технічна</option>
+              <option value="Graduate">Фахова передвища</option>
+              <option value="Graduate">Бакалавр / Магістр</option>
+              <option value="Graduate">Аспірантура / Докторантура</option>
+              <option value="Not Graduate">Немає</option>
+          </select>
+        </p>
+        <p>
+          <label for="Credit_History_Select">Чи це ваша перша позика:</label><br>
+          <select id="Credit_History_Select" name="Credit_History" required>
+              <option value="" disabled selected>Вибрати</option>
+              <option value="0">Так</option>
+              <option value="1">Ні</option>
+          </select>
+        </p>
+        <p>
+          <label for="LoanAmount">Сума позики у тисячах (наприклад - 100):</label><br>
+          <input id="LoanAmount" name="LoanAmount" type="number" required>
+        </p>
+
+        <p>
+          <label for="Loan_Amount_Term">Термін позики у місяцях (наприклад - 360):</label><br>
+          <input id="Loan_Amount_Term" name="Loan_Amount_Term" type="number" required>
+        </p>
+
+        <p>
+          <label for="Property_Area_Select">Тип місцевості проживання:</label><br>
+          <select id="Property_Area_Select" name="Property_Area" required>
+              <option value="" disabled selected>Вибрати</option>
+              <option value="Urban">Міська</option>
+              <option value="Semiurban">Напівміська</option>
+              <option value="Rural">Сільська</option>
+              <option value="Other">Інша</option>
+          </select>
+        </p>
+
+        <br>
+        <button id='check-button' type="submit">Перевірити</button>
+    </form>
+</body>
+</html>
