@@ -66,16 +66,16 @@ pipeline = Pipeline([
     ('classifier', model),
 ])
 param_grid = {
-    'classifier__n_estimators': [100, 200, 300],
-    'classifier__max_depth': [10, 20, None],
-    'classifier__min_samples_split': [2, 5, 10],
-    'classifier__min_samples_leaf': [1, 2, 4],
-    'classifier__max_features': ['sqrt', 0.5, 'log2'],
+    'classifier__n_estimators': [100, 200, 300, 400, 500],
+    'classifier__max_depth': [10, 20, 30, 40, None],
+    'classifier__min_samples_split': [2, 5, 10, 15],
+    'classifier__min_samples_leaf': [1, 2, 4, 6],
+    'classifier__max_features': ['sqrt', 'log2', 0.3, 0.5, 0.7],
     'classifier__bootstrap': [True, False],
     'classifier__class_weight': [None, 'balanced', 'balanced_subsample'],
-    'classifier__ccp_alpha': [0.0, 0.005, 0.01]
+    'classifier__ccp_alpha': [0.0, 0.001, 0.005, 0.01]
 } # Набір гіперпараметрів для пошуку найкращих
-grid_search = GridSearchCV(pipeline, param_grid, cv=4) # Створюємо модель пошуку
+grid_search = GridSearchCV(pipeline, param_grid, cv=3) # Створюємо модель пошуку
 grid_search.fit(X_train, y_train)
 print("Найкращі параметри:", grid_search.best_params_, '\n')
 best_model = grid_search.best_estimator_ # Робимо удосконалену модель
