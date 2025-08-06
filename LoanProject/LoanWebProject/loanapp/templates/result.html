@@ -1,20 +1,24 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Результат</title>
+    <link rel="stylesheet" href="{% static 'loanapp/css/style.css' %}">
+
 </head>
 <body>
+    <a href="/" id="home-button">🔙 На головну</a>
     {% if result == 1 %}
-    <h2>✅ Вітаємо! Вашу позику схвалено!</h2>
+    <h2 id ='approved'>✅ Вітаємо!<br>Вашу позику схвалено!</h2>
     <br><br>
-    <video width="400" autoplay muted loop>
+    <video width="500" autoplay muted loop>
     <source src="https://i.gifer.com/12Ix.mp4" type="video/mp4">
     </video>
    {% else %}
-    <h2>❌ На жаль, вашу позику було відхилено.</h2>
+    <h2 id ='rejected'>❌ На жаль, вашу позику<br>було відхилено</h2>
     <br><br>
-    <video width="400" autoplay muted loop>
+    <video width="500" autoplay muted loop>
     <source src="https://i.gifer.com/11rY.mp4" type="video/mp4">
     </video>
     {% endif %}

@@ -1,0 +1,130 @@
+body {
+    font-family: "Segoe UI", sans-serif;
+    background-color: #c9c9ff;
+    text-align: center;
+    color: #12127e;
+
+}
+input, select, option, label {
+        color: #2a2a72;
+}
+h1 {
+    font-size: 60px;
+    margin-bottom: 10px;
+    margin-top: 50px;
+    margin-left: 80px;
+}
+
+#congr_msg {
+    font-size: 36px;
+    margin-bottom: 150px;
+    margin-left: 80px;
+
+}
+form {
+    font-size: 25px;
+    text-align: center;
+}
+label {
+    font-size: 28px;
+}
+input {
+    background-color: #d1d1ff;
+    font-size: 20px;
+    border: 2px solid #7a7ae6;
+    border-radius: 6px;
+    padding: 6px 12px;
+    transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 10px;
+}
+
+input::placeholder {
+    color: rgba(0, 0, 0, 0.3);
+    font-style: oblique;
+    font-size: 18px;
+}
+
+input:focus {
+    outline: none;
+    background-color: #c1c1fd;
+    border-color: #5c5ce0;
+    box-shadow: 0 0 8px rgba(92, 92, 224, 0.5);
+}
+
+select {
+    background-color: #c0c0f3;
+    font-size: 20px;
+    text-align: center;
+    border: 2px solid #7a7ae6;
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 10px;
+
+}
+
+select:hover, select:focus {
+    border-color: #5c5ce0;
+    box-shadow: 0 0 8px rgba(92, 92, 224, 0.5);
+    outline: none;
+}
+
+option {
+    background-color: #cdcdfa;
+    font-size: 18px;
+    text-align: center;
+    padding: 6px 12px;
+    border: 2px solid #7676ff;
+    border-radius: 6px;
+}
+
+#check-button {
+    background-color: #8787f8;
+    font-size: 22px;
+    font-weight: bold;
+    border: 2px solid #7a7ae6;
+    border-radius: 6px;
+    padding: 10px 20px;
+    margin-top: 10px;
+    margin-bottom: 24px;
+    color: #38389f;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#check-button:hover{
+    outline: none;
+    background-color: #7c7cea;
+    border-color: #5c5ce0;
+    box-shadow: 0 0 8px rgba(92, 92, 224, 0.5);
+}
+
+#approved{
+    margin-bottom: 30px;
+    margin-top: 33px;
+    font-size: 47px;
+    color: #0c6315;
+}
+
+#rejected{
+    margin-bottom: 30px;
+    margin-top: 33px;
+    font-size: 47px;
+    color: #831919;
+}
+
+
+a {
+    font-size: 33px;
+    display: inline-block;
+    color: #6f48b6;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.15s ease;
+
+}
+
+a:hover {
+    color: #5b30a8;
+}

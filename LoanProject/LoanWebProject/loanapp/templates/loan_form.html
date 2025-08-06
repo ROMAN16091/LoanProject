@@ -1,36 +1,33 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
     <title>Оцінка позики</title>
+    <link rel="stylesheet" href="{% static 'loanapp/css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Open+Sans&family=Lato&display=swap" rel="stylesheet">
+
 </head>
 <body>
+    <h1>Вітання!👋</h1>
+    <p id="congr_msg">Щоб перевірити можливість отримання позики💰,<br>заповніть, будь ласка, форму нижче 📝</p>
     <form method="post" action="{% url 'post_loan' %}">
         {% csrf_token %}
 
         <p>
-          <label for="ApplicantIncome">Дохід заявника (наприклад - 3000):</label><br>
-          <input id="ApplicantIncome" name="ApplicantIncome" type="number" required>
+          <label for="ApplicantIncome">💸 Дохід заявника:</label><br>
+          <input id="ApplicantIncome" name="ApplicantIncome" type="number" required min="0" placeholder="Наприклад: 3000">
         </p>
+
+
         <p>
-          <label for="DependentsSelect">Кількість співзаявників :</label><br>
-          <select id="DependentsSelect" name="Dependents" required>
-              <option value="" disabled selected>Вибрати</option>
-              <option value="0">0</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3+">3+</option>
-          </select>
+          <label for="CoapplicantIncome">💰 Сумарний дохід співзаявника(ів):
+          </label><br>
+          <input id="CoapplicantIncome" name="CoapplicantIncome" type="number" placeholder="Наприклад: 1500" min="0">
         </p>
 
         <p>
-          <label for="CoapplicantIncome">Сумарний дохід співзаявника(ів) (наприклад - 1500)
-              <br>Якщо у вас немає співзаявників - залиште це поле порожнім:</label><br>
-          <input id="CoapplicantIncome" name="CoapplicantIncome" type="number" required>
-        </p>
-
-        <p>
-          <label for="GenderSelect">Стать:</label><br>
+          <label for="GenderSelect">👤 Стать:</label><br>
           <select id="GenderSelect" name="Gender" required>
               <option value="" disabled selected>Вибрати</option>
               <option value="Male">Чоловік</option>
@@ -38,27 +35,26 @@
               <option value="Other">Інша</option>
           </select>
         </p>
-
         <p>
-          <label for="MarriedSelect">У шлюбі:</label><br>
+          <label for="MarriedSelect">💍 У шлюбі:</label><br>
           <select id="MarriedSelect" name="Married" required>
               <option value="" disabled selected>Вибрати</option>
               <option value="Yes">Так</option>
               <option value="No">Ні</option>
           </select>
         </p>
-
         <p>
-          <label for="Self_Employed_Select">Самозайнята особа:</label><br>
-          <select id="Self_Employed_Select" name="Self_Employed" required>
+          <label for="DependentsSelect">👥 Кількість Ваших утриманців:</label><br>
+          <select id="DependentsSelect" name="Dependents" required >
               <option value="" disabled selected>Вибрати</option>
-              <option value="Yes">Так</option>
-              <option value="No">Ні</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3+">3+</option>
           </select>
         </p>
-
         <p>
-          <label for="EducationSelect">Освіта:</label><br>
+          <label for="EducationSelect">👨‍🎓 Освіта:</label><br>
           <select id="EducationSelect" name="Education" required>
               <option value="" disabled selected>Вибрати</option>
               <option value="Graduate">Початкова</option>
@@ -71,26 +67,35 @@
               <option value="Not Graduate">Немає</option>
           </select>
         </p>
+
         <p>
-          <label for="Credit_History_Select">Чи це ваша перша позика:</label><br>
-          <select id="Credit_History_Select" name="Credit_History" required>
+          <label for="Self_Employed_Select">💼 Самозайнята особа:</label><br>
+          <select id="Self_Employed_Select" name="Self_Employed" required>
               <option value="" disabled selected>Вибрати</option>
-              <option value="0">Так</option>
-              <option value="1">Ні</option>
+              <option value="Yes">Так</option>
+              <option value="No">Ні</option>
           </select>
         </p>
         <p>
-          <label for="LoanAmount">Сума позики у тисячах (наприклад - 100):</label><br>
-          <input id="LoanAmount" name="LoanAmount" type="number" required>
+          <label for="First_Credit_Request_Select">❓ Чи це ваша перша позика:</label><br>
+          <select id="First_Credit_Request_Select" name="First_Credit_Request" required>
+              <option value="" disabled selected>Вибрати</option>
+              <option value="True">Так</option>
+              <option value="False">Ні</option>
+          </select>
+        </p>
+        <p>
+          <label for="LoanAmount">💵 Сума позики у тисячах:</label><br>
+          <input id="LoanAmount" name="LoanAmount" type="number" required min="0" placeholder="Наприклад: 100">
         </p>
 
         <p>
-          <label for="Loan_Amount_Term">Термін позики у місяцях (наприклад - 360):</label><br>
-          <input id="Loan_Amount_Term" name="Loan_Amount_Term" type="number" required>
+          <label for="Loan_Amount_Term">🗓️ Термін позики у місяцях:</label><br>
+          <input id="Loan_Amount_Term" name="Loan_Amount_Term" type="number" required min="0" placeholder="Наприклад: 360">
         </p>
 
         <p>
-          <label for="Property_Area_Select">Тип місцевості проживання:</label><br>
+          <label for="Property_Area_Select">🏠 Тип місцевості проживання:</label><br>
           <select id="Property_Area_Select" name="Property_Area" required>
               <option value="" disabled selected>Вибрати</option>
               <option value="Urban">Міська</option>
@@ -100,8 +105,10 @@
           </select>
         </p>
 
-        <br>
-        <button id='check-button' type="submit">Перевірити</button>
+        <div>
+            <button id='check-button' type="submit">☑️ Оцінити позику</button>
+        </div>
+
     </form>
 </body>
 </html>
