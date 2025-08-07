@@ -77,21 +77,21 @@
           </select>
         </p>
         <p>
-          <label for="First_Credit_Request_Select">❓ Чи це ваша перша позика:</label><br>
-          <select id="First_Credit_Request_Select" name="First_Credit_Request" required>
+          <label for="Credit_History_Select">❓ Чи брали ви позику раніше:</label><br>
+          <select id="Credit_History_Select" name="Credit_History" required>
               <option value="" disabled selected>Вибрати</option>
-              <option value="True">Так</option>
-              <option value="False">Ні</option>
+              <option value='1'>Так</option>
+              <option value='0'>Ні</option>
           </select>
         </p>
         <p>
-          <label for="LoanAmount">💵 Сума позики у тисячах:</label><br>
-          <input id="LoanAmount" name="LoanAmount" type="number" required min="0" placeholder="Наприклад: 100">
+          <label for="LoanAmount">💵 Сума позики у тисячах (мін. 5):</label><br>
+          <input id="LoanAmount" name="LoanAmount" type="number" required min="5" placeholder="Наприклад: 100">
         </p>
 
         <p>
-          <label for="Loan_Amount_Term">🗓️ Термін позики у місяцях:</label><br>
-          <input id="Loan_Amount_Term" name="Loan_Amount_Term" type="number" required min="0" placeholder="Наприклад: 360">
+          <label for="Loan_Amount_Term">🗓️ Термін позики у місяцях (мін. 6):</label><br>
+          <input id="Loan_Amount_Term" name="Loan_Amount_Term" type="number" required min="6" placeholder="Наприклад: 360">
         </p>
 
         <p>

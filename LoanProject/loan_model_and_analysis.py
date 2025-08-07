@@ -1,5 +1,6 @@
 # Необхідні імпорти
 import joblib
+import numpy as np
 import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
@@ -10,40 +11,43 @@ from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_sc
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Завантажуємо дані та робимо базовий аналіз і підготовку даних
+# Завантажуємо дані та робимо базовий аналіз
 df = pd.read_csv('loan_data.csv')
 print(df.head().to_string())
-print(f'Розподіл даних:\n{df.describe().round(2).to_string()}\n') # Розподіл даних
-print(f'Відсутні значення:\n{df.isna().sum()}\n') # Відсутні значення
+print(f'Розподіл даних:\n{df.describe().round(2).to_string()}\n')
+print(f'Розмір набору даних:{df.shape}\n')
+print(f'Типи даних по стовпцям:\n{df.dtypes}\n')
 
-# Заповнюємо відсутні значення
+# Позбуваємося пустих значення Credit_History
+print(f'Відсутні значення:\n{df.isna().sum()}\n')
+df = df.dropna(subset=['Credit_History'])
+# Інші заповнюємо модою та медіаною
 for i in ['Gender', 'Dependents', 'Self_Employed']:
     df[i] = df[i].fillna(df[i].mode()[0])
 
 df['Loan_Amount_Term'] = df['Loan_Amount_Term'].fillna(df['Loan_Amount_Term'].median())
-df['Credit_History'] = df['Credit_History'].fillna(-1) # Запонюємо пусті кредитні історії окремим числом
 print(f'Відсутні значення:\n{df.isna().sum()}\n')
 
 df['Loan_Status'] = df['Loan_Status'].map({'N': 0, 'Y': 1}) # Кодуємо цільову змінну
 
-# Створюємо нову колонку, яке буде показувати чи перший це кредит користувача
-
-df['First_Credit_Request'] = df['Credit_History'].map({0: True, 1: False})
+# Створюємо нові стовпці
+df['First_Credit_Request'] = df['Credit_History'].map({0: True, 1: False}) # Цей буде показувати чи перший це кредит користувача
+df['Total_Income'] = df['ApplicantIncome'] + df['CoapplicantIncome'] # Загальний дохід
+df['Loan_Amount_by_Income'] = df['LoanAmount'] * 1000 / df['Total_Income'] # Відношенню суми позики до доходу
 
 # Позбуваємось колонок, зайвих для аналізу
-df = df.drop(columns='Loan_ID')
+df = df.drop(columns=['Loan_ID'])
 
 # Створюємо числовий дф для перегляду кореляції
-num_df = pd.get_dummies(df, drop_first=True).astype(int).select_dtypes(include='number')
+num_df = pd.get_dummies(df, drop_first=True).astype(float).select_dtypes(include='number')
 corr_pearson = num_df.corr(method='pearson')['Loan_Status'].sort_values(ascending=False).round(2)
 print(f'Кореляція Пірсона з цільовою змінною:\n{corr_pearson}\n') # Кореляція Пірсона
 corr_spearman = num_df.corr(method='spearman')['Loan_Status'].sort_values(ascending=False).round(2)
 print(f'Кореляція Спірмана з цільовою змінною:\n{corr_spearman}\n') # Кореляція Спірмана
 corr_kendall = num_df.corr(method='kendall')['Loan_Status'].sort_values(ascending=False).round(2)
 print(f'Кореляція Кендалла з цільовою змінною:\n{corr_kendall}\n') # Кореляція Кендалла
-# Є вище среднього негативна залежність між цільовою змінною Loan_Status та First_Credit_Request - -0.61
-# Також середня позитивна залежність між цільовою змінною та Credit_History за Спірманом - 0.4
-
+# Є вище среднього негативна залежність між цільовою змінною Loan_Status та Credit_History - 0.62
+# І також між цільовою змінною та First_Credit_Request протилежна - -0.62
 
 # Розробка моделі машинного навчання
 # Розбиваємо дані на ф'ючі та ключову змінну
@@ -56,9 +60,10 @@ X_train, X_test, y_train, y_test = train_test_split(X,y, random_state=0, test_si
 # Використовуємо модель "випадкового лісу"
 model = RandomForestClassifier(random_state=0, bootstrap=True, class_weight='balanced')
 
+
 # Виділяємо окремо категоріальні та числові колонки
 categorical_features = X.select_dtypes(include='object').columns.tolist()
-numerical_features = X.select_dtypes(include='number').columns.tolist()
+numerical_features = X.select_dtypes(include=['number','bool']).columns.tolist()
 
 # Обробка даних
 preprocessor = ColumnTransformer([
@@ -71,16 +76,16 @@ pipeline = Pipeline([
     ('classifier', model),
 ])
 param_grid = {
-    'classifier__n_estimators': [300, 3500],
+    'classifier__n_estimators': [300, 350],
     'classifier__max_depth': [3, 5],
     'classifier__min_samples_split': [4, 5],
     'classifier__min_samples_leaf': [1, 2],
     'classifier__max_features': ['sqrt', 0.5],
-    'classifier__ccp_alpha': [0.025, 0.03]
+    'classifier__ccp_alpha': [0.025, 0.05]
 } # Набір гіперпараметрів для пошуку найкращих
 
 # Створюємо модель пошуку, оптимізуємо під F1 Score
-grid_search = GridSearchCV(pipeline, param_grid, cv=4, n_jobs=-1, scoring='f1')
+grid_search = GridSearchCV(pipeline, param_grid, cv=5, n_jobs=4, scoring='f1')
 grid_search.fit(X_train, y_train)
 print("Найкращі параметри:", grid_search.best_params_, '\n')
 best_model = grid_search.best_estimator_ # Робимо удосконалену модель
@@ -133,5 +138,6 @@ plt.tight_layout()
 plt.show()
 
 # Зберігаємо модель у файл
-joblib.dump(best_model, 'loan_model.pkl')
+joblib.dump(best_model, 'LoanWebProject/loanapp/models/loan_model.pkl')
 print('Збережено!')
+
