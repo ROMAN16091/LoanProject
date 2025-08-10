@@ -1,6 +1,5 @@
 # Необхідні імпорти
 import joblib
-import numpy as np
 import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
@@ -118,13 +117,13 @@ plt.tight_layout()
 plt.show()
 
 # Розподіл змінних
-df.hist(figsize=(12,9))
+df.hist(figsize=(12,8))
 plt.suptitle('Розподіл змінних')
 plt.tight_layout()
 plt.show()
 
 # Зв’язок між декількома змінними та цільовою змінною
-features = df[['Loan_Status','Credit_History', 'First_Credit_Request', 'LoanAmount', 'CoapplicantIncome', 'ApplicantIncome']]
+features = df[['Loan_Status','Credit_History', 'First_Credit_Request', 'Total_Income', 'ApplicantIncome']]
 
 # Використовуємо Спірмана, так як вона краще працює з нелійними залежностями
 corr = features.corr(method='spearman').round(2)

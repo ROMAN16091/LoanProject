@@ -87,7 +87,7 @@ param_grid = {
 ## 7. Візуалізації
 - Беремо важливі фічі та імена ознак після трансформації за допомогою `feature_importances_`
 та `get_feature_names_out()` відповідно
-- Створюємо `DataFrame` з важливістю ознак та сортуєм за важливістю від більшого к меньшого
+- Створюємо `DataFrame` з важливістю ознак та сортуєм за важливістю від більшого к меньшому
 - Будуємо:
   - **Barplot** важливості ознак за допомогою `sns.barplot()`
   - **Гістограми** розподілу змінних за допомогою `df.hist()`
@@ -115,7 +115,7 @@ param_grid = {
    - Використання `<input type = 'number' min ='0'>` для **ApplicantIncome**, **CoapplicantIncome**, **Loan_Amount** 
    - та **Loan_Amount_Term**
    - Використання `<select>` для **Gender**, **Married**, **Dependents**, **Education**, **Self_Employed**, 
-  **First_Credit_Request** та **Property_Area**
+  **Credit_History** та **Property_Area**
    - Всі змінні обов'язкові к заповненню (`required`) крім **CoapplicantIncome**, так як співзаявників може не бути
    - Для відправлення і наступної оцінки позики використовується кнопка - `<button type="submit">`
 - `result.html` - сторінка з результатом
@@ -129,7 +129,7 @@ param_grid = {
 
 ## 10. Інструкції з використання
 1. Виконати скрипт навчання `loan_model_and_analysis`, щоб створити `loan_model.pkl`
-3. **Запустити сервер**
+2. **Запустити сервер**
 ```shell
     python manage.py runserver
 ```
@@ -137,7 +137,7 @@ param_grid = {
    - Відкрити у браузері `http://127.0.0.1:8000/`
    - Заповнити форму та отримати результат
 
----
+--- 
 
 ## 11. Можливі покращення
 - Додати API
